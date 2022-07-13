@@ -1,29 +1,78 @@
-import React from 'react'
+import React,{ Component } from 'react'
 import Header from '../../Components/Layout/Header/header'
 import './home.scss'
 import AddIcon from '../../Assets/icons/add-24px.svg'
 import {Link} from 'react-router-dom'
+import AddressBookService from '../Services/AddressBookService'
+import { ToastContainer,toast } from 'react-toastify';
 
-export default function Home() {
-  return (
-    <>
-    <Header />
+import Displaydata from '../DisplayData/DisplayData'
 
-    <div className="main-content">
-    <div className="head-content">
-        <div className="person-detail-text">
-            Person Details
-        </div>
-        <Link to="/add-address" className="add-button">
-            <img src={AddIcon} alt="" />Add Person </Link>
-    </div>
-    <div className="table-main">
-        <table id="display" className="table">
-        <tbody><tr><th>Full Name</th><th>Address</th><th>City</th><th>State</th><th>Zip Code</th><th>Phone Number</th><th>Actions</th></tr></tbody>
-        </table>
-    </div>
-    </div>
-    </>
+  export default class Home extends Component {
 
-  )
+  /**
+   * Required constructor for class
+   */
+  constructor(props) {
+    super(props)
+    this.state = {
+      allAddressBookArray:[]
+    };
+  }
+
+  /**
+  |--------------------------------------------------
+  | After component is mounted we are calling the axios method to get data to display.
+  |--------------------------------------------------
+  */
+  componentDidMount() { 
+    this.getAddressBookAllData();
+   }
+
+   /** getAllAddressBook
+   |--------------------------------------------------
+   | Here we are creating getAddressBookAllData() method which will be calling AddressBookService implementing axios.
+   |--------------------------------------------------
+   */
+   
+   getAddressBookAllData=()=>{
+    AddressBookService.getAllAddressBook()
+    .then((response)=>{
+      console.log("Got all employees")
+      this.setState({allAddressBookArray : response.data.data});
+           
+    })
+    .catch((error)=>{
+      toast.error("Error with api service", error)
+    })
+   }
+
+
+
+  render() {
+    return (
+      <>
+      <Header />
+      <ToastContainer />
+
+      <div className="main-content">
+      <div className="head-content">
+          <div className="person-detail-text">
+              Person Details
+          </div>
+          <Link to="/add-address" className="add-button">
+              <img src={AddIcon} alt="" />Add Person </Link>
+      </div>
+      <div className="table-main">
+            {/* calling the Displaydata Component */}        
+          <Displaydata passedAddressBookData={this.state.allAddressBookArray} 
+                        getAddressBookAllData={this.getAddressBookAllData}
+          /> 
+      </div>
+      </div>
+      </>
+
+    )
+  }
 }
+

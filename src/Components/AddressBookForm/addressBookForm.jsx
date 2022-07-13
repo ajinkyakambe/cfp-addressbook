@@ -1,11 +1,20 @@
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 import CancelButton from '../../Assets/icons/cancel.png';
 import Header from '../../Components/Layout/Header/header';
 import './addressBookForm.scss';
-import {Link} from 'react-router-dom';
+import {Link,useParams,useNavigate} from 'react-router-dom';
+import AddressBookService from '../../Components/Services/AddressBookService'
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const AddressBookForm = (props) =>{
+
+
+  let navigate = useNavigate();
+   // Get the addressEntityId param from the URL.
+   let { addressEntityId } = useParams();
 
   const [contact, setContact] = useState({
     personId:"",
@@ -15,6 +24,7 @@ const AddressBookForm = (props) =>{
     city: "",
     state: "",
     zip: "",
+    isUpdate: false
     
   });
 
@@ -25,18 +35,68 @@ const AddressBookForm = (props) =>{
    
   }
 
+  useEffect(()=>{
+    if(addressEntityId){
+      getContactDataById(addressEntityId);
+    }
+  },[addressEntityId])
+
+  const getContactDataById = (addressEntityId) =>{   
+    AddressBookService.getAddressById(addressEntityId).then((response)=>{
+      console.log(response)
+      setContact({...contact,...response,
+        personId:response.data.data.personId,
+        fullName:response.data.data.name,
+        phone:response.data.data.phoneNumber,
+        address:response.data.data.address,
+        city:response.data.data.city,
+        state:response.data.data.state,
+        zip:response.data.data.zipCode,
+        isUpdate:true
+      })
+    })
+  }
+
+
   function saveData(event) {
     event.preventDefault();
-    console.log("Object save method is getting called");
-    let addressEntry = {
-    fullName: contact.fullName,
-    phone: contact.phone,
-    address: contact.address,
-    city: contact.city,
-    state: contact.state,
-    zip: contact.zip,
+    console.log("Save method is getting called");
+      let addressEntry = {
+      name: contact.fullName,
+      phoneNumber: contact.phone,
+      address: contact.address,
+      city: contact.city,
+      state: contact.state,
+      zipCode: contact.zip,
+      }
+
+    /**
+     * Here will check if the isUpdate property of contact object is set.
+     * If set we will call update method or else we will call create method.
+     */  
+    if(contact.isUpdate){
+      AddressBookService
+      .updateAddressBookEntity(addressEntityId,addressEntry)
+      .then((response)=>{
+        toast("Updated successfully")
+        navigate("/home");
+      })
+      .catch((error)=>{
+        toast.error("Error updating address",error)
+      })
+    } else {
+      AddressBookService
+      .createAddressBookEntity(addressEntry)
+      .then((response)=>{
+        toast(" Entry added successfully")
+        console.log(response);
+        navigate("/home");
+      })
+      .catch((error)=>{
+        toast.error("Error creating address",error)
+      })
     }
-   console.log(addressEntry)
+    
    }
 
    const resetForm = (event) =>{
@@ -58,7 +118,7 @@ const AddressBookForm = (props) =>{
       <>
       <Header/>
        
-         
+    
     <div className="form-content">
         <div className="form-head">
             <span> PERSON ADDRESS FORM </span>

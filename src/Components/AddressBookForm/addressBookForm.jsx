@@ -17,6 +17,8 @@ const AddressBookForm = (props) =>{
    let { addressEntityId } = useParams();
 
   const [contact, setContact] = useState({
+    allState :[ "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"],
+    allCity: ["Visakhapatnam","Vijayawada","Guntur","Nellore","Kurnool","Rajahmundry","Kakinada","Tirupati","Anantapur","Kadapa","Vizianagaram","Eluru","Ongole","Nandyal","Machilipatnam","Adoni","Tenali","Siwan","Kishanganj","Jamalpur","Buxar","Jehanabad","Aurangabad","Lakhisarai","Nawada","Jamui", "Mangrol","Viramgam","Modasa","Palitana","Petlad","Kapadvanj","Sihor","Bharatpur","Pali","Barmer","Sikar","Tonk","Sadulpur","Sawai Madhopur","Nagaur","Makrana","Sujangarh" ,"Kolkata","Siliguri","Asansol","Raghunathganj","Kharagpur","Naihati","English Bazar","Baharampur"],
     personId:"",
     fullName: "",
     phone: "",
@@ -159,11 +161,13 @@ const AddressBookForm = (props) =>{
                 onChange={handleInput}
                 required>
                             <option value="">City</option>
-                            <option value="Mumbai">Mumbai</option>
-                            <option value="Patna">Pune</option>
-                            <option value="Chennai">Chennai</option>
-                            <option value="Kolkata">Kolkata</option>
-                            <option value="Jaipur">Nagpur</option>
+                            {
+                              contact.allCity.map((city) => {
+                                return  <option value={city}>{city}</option> 
+                               })
+                            }
+                           
+                            
                         </select>
                     </div>
                 </div>
@@ -174,11 +178,13 @@ const AddressBookForm = (props) =>{
                 onChange={handleInput}
                 required>
                             <option value="">State</option>
-                            <option value="Rajasthan">Rajasthan</option>
-                            <option value="Maharashtra">Maharashtra</option>
-                            <option value="West Bengal">West Bengal</option>
-                            <option value="Bihar">Bihar</option>
-                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            {
+                            contact.allState.map((state) => { 
+                              /* ...Calling the state var */
+                             return <option value={state}>{state}</option>
+                             //Array.map should return the value.                            
+                            })
+                            }                           
                         </select>
                     </div>
                 </div>

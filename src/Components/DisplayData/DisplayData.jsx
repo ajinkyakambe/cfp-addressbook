@@ -31,9 +31,13 @@ export default function DisplayData(props) {
         .then(response=>{
             let answer = window.confirm("Do you wish to continue ?",response);
             if(answer === true){
-                toast("Sucessfully deleted the address book entry.")
+                toast("Sucessfully deleted the address book entry.",addressBookId)
+                setTimeout(function() {
                 window.location.reload();
                 props.getAddressBookAllData();
+                }, 2000);
+                
+                
             }
             else{
                 window.location.reload();
@@ -57,9 +61,9 @@ export default function DisplayData(props) {
               <th>Full Name</th>
               <th>Address</th>
               <th>City</th>
-              <th>State</th>
-              <th>Zip Code</th>
+              <th>State</th>             
               <th>Phone Number</th>
+              <th>Zip Code</th>
               <th> {/* <th>Actions</th> */}</th>
               
             </tr>
@@ -71,10 +75,10 @@ export default function DisplayData(props) {
              <tr key={addressBookEntry.personId}>
              <td>{i+1}</td>
              <td>{addressBookEntry.name}</td>
-             <td>{addressBookEntry.phoneNumber}</td>
              <td>{addressBookEntry.address}</td>
-             <td>{addressBookEntry.city}</td>
+             <td>{addressBookEntry.city}</td>             
              <td>{addressBookEntry.state}</td>
+             <td>{addressBookEntry.phoneNumber}</td>
              <td>{addressBookEntry.zipCode}</td>
              
              <td>

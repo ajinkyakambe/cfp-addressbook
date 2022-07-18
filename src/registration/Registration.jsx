@@ -1,12 +1,16 @@
 import {useForm} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import {useNavigate, Link} from 'react-router-dom';
 
 export {Registration}
 
 
 
 function Registration(){
+
+    //Global vars
+    let navigate = useNavigate();
 
     // Form validation rules
     const formValidationSchema = Yup.object().shape({
@@ -22,12 +26,16 @@ function Registration(){
 
     function onSubmit(data){
         // display form data on successfully
+        
         alert('SUCCESS' + JSON.stringify(data,null,4));
-        return false;
+        navigate("/login")
     }
 
     return(
         <div className="col-md-6 offset-md-3 mt-5">
+            <div className="alert alert-info">
+               If you are already registered, <Link to="/login">Login Here</Link>
+            </div>
           <div className="card m-3">
                 <h5 className="card-header">Address Book User Registration</h5>
                 <div className="card-body">

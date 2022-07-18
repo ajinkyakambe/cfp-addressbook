@@ -62,7 +62,12 @@ class AddressBookService {
      * res: AddressBook Entity Updated Object
      */
     updateAddressBookEntity(addressId,updatedDTO){
-        return axios.put(`${this.SERVICE_BASE_URL}/update/${addressId}`,updatedDTO)
+        return this.new_instance({
+            method: 'put',
+            url: `/update/${addressId}`,
+            data:updatedDTO
+          })
+       
     }
 
     /**

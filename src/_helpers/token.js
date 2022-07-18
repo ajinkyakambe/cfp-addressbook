@@ -1,10 +1,11 @@
 let tokenValue;
 let userObject = localStorage.getItem("user");
-if(userObject !== null){
+if(userObject == null){
+    tokenValue = 0;
+   
+} else {
     let tokenObject = JSON.parse(userObject);
     tokenValue = tokenObject.token;
-} else {
-    tokenValue = 0;
 }
 
 

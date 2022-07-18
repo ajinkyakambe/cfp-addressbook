@@ -21,3 +21,5 @@ class UserRegistrationService {
         })
     }
 }
+
+export default new UserRegistrationService();

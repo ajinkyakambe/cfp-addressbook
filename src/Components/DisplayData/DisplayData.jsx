@@ -1,15 +1,15 @@
 import React from 'react';
 import deleteIcon from "../../Assets/icons/delete-black-18dp.svg";
 import editIcon from "../../Assets/icons/create-black-18dp.svg";
-import './DisplayData.scss';
-import {ToastContainer,toast} from 'react-toastify'
+import './displayData.scss';
+import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import AddressBookService from '../Services/AddressBookService'
 
 export default function DisplayData(props) {
 
-  console.log(props.passedAddressBookData)
+  
 
     /**
     |--------------------------------------------------

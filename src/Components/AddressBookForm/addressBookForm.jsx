@@ -4,7 +4,7 @@ import Header from '../../Components/Layout/Header/header';
 import './addressBookForm.scss';
 import {Link,useParams,useNavigate} from 'react-router-dom';
 import AddressBookService from '../../Components/Services/AddressBookService'
-import { ToastContainer,toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -81,7 +81,7 @@ const AddressBookForm = (props) =>{
       .updateAddressBookEntity(addressEntityId,addressEntry)
       .then((response)=>{
         toast("Updated successfully")
-        navigate("/home");
+        navigate("/abhome");
       })
       .catch((error)=>{
         toast.error("Error updating address",error)
@@ -92,7 +92,7 @@ const AddressBookForm = (props) =>{
       .then((response)=>{
         toast(" Entry added successfully")
         console.log(response);
-        navigate("/home");
+        navigate("/abhome");
       })
       .catch((error)=>{
         toast.error("Error creating address",error)
@@ -124,7 +124,7 @@ const AddressBookForm = (props) =>{
     <div className="form-content">
         <div className="form-head">
             <span> PERSON ADDRESS FORM </span>
-            <span id="img"><Link to="/home"><img src={CancelButton} height="20" width="20" alt="" /></Link>
+            <span id="img"><Link to="/abhome"><img src={CancelButton} height="20" width="20" alt="" /></Link>
             </span>
         </div>
         
@@ -153,7 +153,7 @@ const AddressBookForm = (props) =>{
                
             </div>
 
-            <div className="row">
+            <div className="row-content">
                 <div className="input-content">
                     <label className="label text" htmlFor="city">City</label>
                     <div className="row-content">

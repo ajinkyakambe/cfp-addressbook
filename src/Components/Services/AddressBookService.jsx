@@ -1,17 +1,32 @@
 import axios from 'axios'
+import { tokenHelper } from '_helpers';
 
 class AddressBookService {
 
-    SERVICE_BASE_URL = 'http://localhost:9000/api/addressbookservice'
 
+    constructor(props){     
+
+       
+        this.new_instance = axios.create({
+            baseURL: 'http://localhost:9000/api/addressbookservice',
+            timeout: 5000,
+            headers: {'token': tokenHelper.token}
+          });        
+    }
+
+      
 
     /**
      * 
      * req:
      * res: All AddressBook Object
      */
-    getAllAddressBook(){
-        return axios.get(`${this.SERVICE_BASE_URL}/get/`) 
+    getAllAddressBooks(){
+        // Returning the base instance of axios with method and url data.       
+        return this.new_instance({
+            method: 'get',
+            url: '/get/'
+          })
     }
 
     /**
@@ -20,7 +35,11 @@ class AddressBookService {
      * res: AddressBook Entity Object
      */
     getAddressById(addressId){
-        return axios.get(`${this.SERVICE_BASE_URL}/get/${addressId}`)
+        return this.new_instance({
+            method: 'get',
+            url: `/get/${addressId}`
+          })
+      
     }
 
     /**
@@ -29,7 +48,12 @@ class AddressBookService {
      * res: AddressBook Response Object
      */
     createAddressBookEntity(addressBookDTO){
-        return axios.post(`${this.SERVICE_BASE_URL}/create`,addressBookDTO)
+        return this.new_instance({
+            method: 'post',
+            url: `/create`,
+            data:addressBookDTO
+          })
+       
     }
 
     /**
@@ -47,7 +71,11 @@ class AddressBookService {
      * res: 
      */
     deleteAddressBookEntity(addressId){
-        return axios.delete(`${this.SERVICE_BASE_URL}/delete/${addressId}`)
+        return this.new_instance({
+            method: 'delete',
+            url: `/delete/${addressId}`
+          })
+        
     }
     
 

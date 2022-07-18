@@ -36,7 +36,7 @@ function Registration(){
             <div className="alert alert-info">
                If you are already registered, <Link to="/login">Login Here</Link>
             </div>
-          <div className="card m-3">
+          <div className="card ">
                 <h5 className="card-header">Address Book User Registration</h5>
                 <div className="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>

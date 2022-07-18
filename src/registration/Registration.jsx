@@ -2,6 +2,8 @@ import {useForm} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import {useNavigate, Link} from 'react-router-dom';
+import {UserRegistrationService} from 'UserRegistrationService'
+import {toast} from 'react-toastify'
 
 export {Registration}
 
@@ -26,9 +28,14 @@ function Registration(){
 
     function onSubmit(data){
         // display form data on successfully
+        // alert('SUCCESS' + JSON.stringify(data,null,4));
+        UserRegistrationService.registerUser(data)
+        .then((response) => {
+            console.log(response);
+            toast.success("User added Sucessfully")
+            navigate("/login")
+        })
         
-        alert('SUCCESS' + JSON.stringify(data,null,4));
-        navigate("/login")
     }
 
     return(

@@ -2,20 +2,20 @@ import axios from 'axios'
 import { tokenHelper } from '_helpers';
 
 class AddressBookService {
-
-
-    constructor(props){     
-
-       
+    /**
+    |--------------------------------------------------
+    | Constructor with axios instance
+    |--------------------------------------------------
+    */
+    constructor(){            
         this.new_instance = axios.create({
-            baseURL: 'http://localhost:9000/api/addressbookservice',
+            baseURL: `${process.env.REACT_APP_API_URL}/api/addressbookservice`,
             timeout: 5000,
             headers: {'token': tokenHelper.token}
           });        
     }
 
       
-
     /**
      * 
      * req:

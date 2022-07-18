@@ -80,7 +80,7 @@ const AddressBookForm = (props) =>{
       AddressBookService
       .updateAddressBookEntity(addressEntityId,addressEntry)
       .then((response)=>{
-        toast("Updated successfully")
+        toast.success("Updated successfully")
         navigate("/abhome");
       })
       .catch((error)=>{
@@ -90,7 +90,7 @@ const AddressBookForm = (props) =>{
       AddressBookService
       .createAddressBookEntity(addressEntry)
       .then((response)=>{
-        toast(" Entry added successfully")
+        toast.success(" Entry added successfully")
         console.log(response);
         navigate("/abhome");
       })

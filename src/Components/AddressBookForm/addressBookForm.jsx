@@ -17,8 +17,8 @@ const AddressBookForm = (props) =>{
    let { addressEntityId } = useParams();
 
   const [contact, setContact] = useState({
-    allState :[ "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"],
-    allCity: ["Visakhapatnam","Vijayawada","Guntur","Nellore","Kurnool","Rajahmundry","Kakinada","Tirupati","Anantapur","Kadapa","Vizianagaram","Eluru","Ongole","Nandyal","Machilipatnam","Adoni","Tenali","Siwan","Kishanganj","Jamalpur","Buxar","Jehanabad","Aurangabad","Lakhisarai","Nawada","Jamui", "Mangrol","Viramgam","Modasa","Palitana","Petlad","Kapadvanj","Sihor","Bharatpur","Pali","Barmer","Sikar","Tonk","Sadulpur","Sawai Madhopur","Nagaur","Makrana","Sujangarh" ,"Kolkata","Siliguri","Asansol","Raghunathganj","Kharagpur","Naihati","English Bazar","Baharampur"],
+    allState :"",
+    allCity: "",
     personId:"",
     fullName: "",
     phone: "",
@@ -33,16 +33,63 @@ const AddressBookForm = (props) =>{
   const handleInput = (event) =>{
     const name = event.target.name;
     const value = event.target.value;
+    console.log(name)
     setContact({...contact,[name]:value})
-   
   }
 
+
+  
+ /**
+ |--------------------------------------------------
+ | Use Effect hook for calling all the important methods
+ |--------------------------------------------------
+ */
   useEffect(()=>{
+
+   
+
     if(addressEntityId){
       getContactDataById(addressEntityId);
     }
   },[addressEntityId])
 
+  /**
+|--------------------------------------------------
+| Get data from json
+|--------------------------------------------------
+*/
+const [data,setData]=useState({});
+
+const getJsonCityData=()=>{
+  fetch('data.json'
+  ,{
+    // passing the headers to fetch config
+    headers : { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+     }
+  }
+  )
+    .then((response)=>{     
+      return response.json();
+    })
+    .then((response)=> {
+      setData(response);
+      
+    });
+}
+
+useEffect(()=>{
+  getJsonCityData()
+},[])
+
+
+
+/**
+|--------------------------------------------------
+| Function to call the data to be used for update method
+|--------------------------------------------------
+*/
   const getContactDataById = (addressEntityId) =>{   
     AddressBookService.getAddressById(addressEntityId).then((response)=>{
       console.log(response)
@@ -116,6 +163,11 @@ const AddressBookForm = (props) =>{
   }
 
   
+  // if(this.state.value !== "undefined"){
+  //   console.log("undefined")
+  // }
+
+
     return (
       <>
       <Header/>      
@@ -153,6 +205,23 @@ const AddressBookForm = (props) =>{
             </div>
 
             <div className="row-content">
+            <div className="input-content">
+                    <label className="label text" htmlFor="state">State</label>
+                    <div className="row-content">
+                        <select className="input" name="state" id="state" value={contact.state}
+                onChange={handleInput}
+                required>
+                            <option value="">State</option>
+                            {                              
+                              Object.keys(data)
+                              .map((state) => {
+                                return <option value={state}>{state}</option>
+                                //Array.map should return the value. 
+                            })
+                             }                           
+                        </select>
+                    </div>
+                </div>
                 <div className="input-content">
                     <label className="label text" htmlFor="city">City</label>
                     <div className="row-content">
@@ -160,33 +229,13 @@ const AddressBookForm = (props) =>{
                 onChange={handleInput}
                 required>
                             <option value="">City</option>
-                            {
-                              contact.allCity.map((city) => {
-                                return  <option value={city}>{city}</option> 
-                               })
-                            }
+                           
                            
                             
                         </select>
                     </div>
                 </div>
-                <div className="input-content">
-                    <label className="label text" htmlFor="state">State</label>
-                    <div className="row-content">
-                        <select className="input" name="state" id="state" value={contact.state}
-                onChange={handleInput}
-                required>
-                            <option value="">State</option>
-                            {
-                            contact.allState.map((state) => { 
-                              /* ...Calling the state var */
-                             return <option value={state}>{state}</option>
-                             //Array.map should return the value.                            
-                            })
-                            }                           
-                        </select>
-                    </div>
-                </div>
+               
                 <div className="input-content">
                     <label className="label text" htmlFor="zip">ZipCode</label>
                     <div className="row-content">
@@ -206,6 +255,11 @@ const AddressBookForm = (props) =>{
         </form>
     </div>
    
+    {
+         
+       
+         }
+
       </>
     )
  

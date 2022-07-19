@@ -20,11 +20,20 @@ function Home() {
 
     return (
         <div>
-            <h1>Hi  {authUser.data.username}, user</h1>
+            <div className="col-md-6 offset-md-3 mt-5">
+            <div className="alert alert-info">
             <p>You're logged in AddressBook</p>
-
-        
-           
+            </div>
+            <div className="card">
+             <h4 className="card-header">Welcome user, {authUser.data.username}</h4>
+                <div className="card-body">
+                      
+                      <p>Username: {authUser.data.username}</p>
+                      <p>Password: {authUser.data.password}</p>
+                       <p>Email:{authUser.data.email}</p>
+            </div>
+            </div>
+            </div>
         </div>
     );
 }

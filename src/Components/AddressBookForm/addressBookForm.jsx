@@ -33,10 +33,10 @@ const AddressBookForm = (props) =>{
   const handleInput = (event) =>{
     const name = event.target.name;
     const value = event.target.value;
-    console.log(name)
     setContact({...contact,[name]:value})
   }
 
+ 
 
   
  /**
@@ -44,9 +44,7 @@ const AddressBookForm = (props) =>{
  | Use Effect hook for calling all the important methods
  |--------------------------------------------------
  */
-  useEffect(()=>{
-
-   
+  useEffect(()=>{  
 
     if(addressEntityId){
       getContactDataById(addressEntityId);
@@ -61,7 +59,7 @@ const AddressBookForm = (props) =>{
 const [data,setData]=useState({});
 
 const getJsonCityData=()=>{
-  fetch('data.json'
+  fetch('http://localhost:3000/data.json'
   ,{
     // passing the headers to fetch config
     headers : { 
@@ -74,10 +72,13 @@ const getJsonCityData=()=>{
       return response.json();
     })
     .then((response)=> {
+     
       setData(response);
       
     });
 }
+
+
 
 useEffect(()=>{
   getJsonCityData()
@@ -162,11 +163,11 @@ useEffect(()=>{
     })
   }
 
-  
-  // if(this.state.value !== "undefined"){
-  //   console.log("undefined")
-  // }
 
+  // Array destructuring for use in Object.value method
+    let {state} = contact;
+
+  
 
     return (
       <>
@@ -214,9 +215,9 @@ useEffect(()=>{
                             <option value="">State</option>
                             {                              
                               Object.keys(data)
-                              .map((state) => {
-                                return <option value={state}>{state}</option>
-                                //Array.map should return the value. 
+                              .map((stateValueSelection,index) => {
+                                 //Array.map should return the value. 
+                                return <option key={index} value={stateValueSelection}>{stateValueSelection}</option>
                             })
                              }                           
                         </select>
@@ -229,10 +230,14 @@ useEffect(()=>{
                 onChange={handleInput}
                 required>
                             <option value="">City</option>
-                           
-                           
                             
-                        </select>
+                                   {
+                                    state && state.length>0 && Object.values(data[state]).map( (cityName, index) => {
+                                      return  <option key={index} value={cityName}>{cityName}</option>
+                                     }) 
+                                   }
+                                 
+                         </select>
                     </div>
                 </div>
                

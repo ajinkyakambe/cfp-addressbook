@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import deleteIcon from "../../Assets/icons/delete-black-18dp.svg";
 import editIcon from "../../Assets/icons/create-black-18dp.svg";
 import './displayData.scss';
@@ -9,8 +9,7 @@ import AddressBookService from '../Services/AddressBookService'
 
 export default function DisplayData(props) {
 
-  
-
+   
     /**
     |--------------------------------------------------
     | Update function with new Router V6

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import deleteIcon from "../../Assets/icons/delete-black-18dp.svg";
 import editIcon from "../../Assets/icons/create-black-18dp.svg";
 import './displayData.scss';
@@ -50,9 +50,7 @@ export default function DisplayData(props) {
 
 
   return (
-    <>
-
-  
+    <> {/** React fragment short hand */}
     <table id="table-display" className="table">
           <thead>
             <tr>

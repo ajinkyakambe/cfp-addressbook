@@ -1,5 +1,6 @@
 let tokenValue;
 let userObject = localStorage.getItem("user");
+console.log(userObject);
 if(userObject === null){
     tokenValue = 0;
    

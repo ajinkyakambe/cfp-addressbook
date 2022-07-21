@@ -11,11 +11,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddressBookForm = (props) =>{
 
-
+  // React router method init
   let navigate = useNavigate();
+
+
    // Get the addressEntityId param from the URL.
    let { addressEntityId } = useParams();
 
+   // Use state Hook
   const [contact, setContact] = useState({
     allState :"",
     allCity: "",
@@ -30,6 +33,7 @@ const AddressBookForm = (props) =>{
     
   });
 
+  // Handle input arrow function
   const handleInput = (event) =>{
     const name = event.target.name;
     const value = event.target.value;
@@ -71,10 +75,8 @@ const getJsonCityData=()=>{
     .then((response)=>{     
       return response.json();
     })
-    .then((response)=> {
-     
-      setData(response);
-      
+    .then((response)=> {     
+      setData(response);      
     });
 }
 

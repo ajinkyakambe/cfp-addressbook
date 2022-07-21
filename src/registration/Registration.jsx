@@ -16,8 +16,8 @@ function Registration(){
 
     // Form validation rules
     const formValidationSchema = Yup.object().shape({
-        username: Yup.string().required('Username is required'),
-        password: Yup.string().min(6,'Password must be at least 6 characters.').required('Password is required'),
+        userName: Yup.string().required('username is required'),
+        userPassword: Yup.string().min(6,'Password must be at least 6 characters.').required('Password is required'),
         email: Yup.string().email('Email is invalid').required('Email is required')
     });
     const formOptions = {resolver: yupResolver(formValidationSchema)};
@@ -49,14 +49,14 @@ function Registration(){
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-row">                        
                             <div className="form-group col">
-                                <label>Username</label>
-                                <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
-                                <div className="invalid-feedback">{errors.username?.message}</div>
+                                <label>userName</label>
+                                <input name="userName" type="text" {...register('userName')} className={`form-control ${errors.userName ? 'is-invalid' : ''}`} />
+                                <div className="invalid-feedback">{errors.userName?.message}</div>
                             </div>
                             <div className="form-group col">
-                                <label>Password</label>
-                                <input name="password" type="text" {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`} />
-                                <div className="invalid-feedback">{errors.password?.message}</div>
+                                <label>userPassword</label>
+                                <input name="userPassword" type="text" {...register('userPassword')} className={`form-control ${errors.userPassword ? 'is-invalid' : ''}`} />
+                                <div className="invalid-feedback">{errors.userPassword?.message}</div>
                             </div>
                         </div>                 
                         <div className="form-row">
